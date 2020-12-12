@@ -12,3 +12,5 @@ services:
     ports:
       - "5000:5000"
     restart: always
+    environment:
+      - MongoURI="mongodb+srv://sreeraj234:Admin@cluster0.uoy2k.mongodb.net/todo?retryWrites=true&w=majority"
