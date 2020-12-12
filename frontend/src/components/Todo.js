@@ -22,7 +22,7 @@ export class Todo extends Component {
     console.log(this.state.item);
     axios({
       method: "post",
-      url: "http://backend:5000/todos",
+      url: "/todos",
       data: {
         todo: this.state.item,
       },
@@ -32,7 +32,7 @@ export class Todo extends Component {
   };
 
   componentDidMount() {
-    axios.get("http://backend:5000/todos").then((todos) => {
+    axios.get("/todos").then((todos) => {
       this.setState(() => ({
         todos: todos.data,
       }));
@@ -41,7 +41,7 @@ export class Todo extends Component {
 
   onDelete = (id) => {
     axios
-      .delete("http://backend:5000/todos/" + id)
+      .delete("/todos/" + id)
       .then((res) => {
         console.log(res.data);
       })
@@ -60,7 +60,7 @@ export class Todo extends Component {
         return todo;
       });
     });
-    axios.post("http://backend:5000/todos/update/" + id, {
+    axios.post("/todos/update/" + id, {
       completed: !completed,
     });
     window.location = "/";

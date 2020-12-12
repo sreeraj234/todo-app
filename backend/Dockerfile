@@ -1,8 +1,8 @@
 FROM node:14
-WORKDIR /backend
+WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN npm install
+RUN yarn install
 COPY . .
 EXPOSE 5000
-CMD ["npm","start"]
+CMD ["yarn","start"]
