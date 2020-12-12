@@ -65,10 +65,7 @@ items:
             io.kompose.service: backend
         spec:
           containers:
-            - env:
-                - name: MongoURI
-                  value: '"mongodb+srv://sreeraj234:Admin@cluster0.uoy2k.mongodb.net/todo?retryWrites=true&w=majority"'
-              image: asia.gcr.io/pacific-element-296717/backend
+            - image: asia.gcr.io/pacific-element-296717/backend
               imagePullPolicy: ""
               name: backend
               ports:

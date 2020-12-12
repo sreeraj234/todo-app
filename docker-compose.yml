@@ -6,11 +6,11 @@ services:
     ports:
       - "3000:3000"
     restart: always
+    depends_on:
+      - backend
 
   backend:
     image: asia.gcr.io/pacific-element-296717/backend
     ports:
       - "5000:5000"
     restart: always
-    environment:
-      - MongoURI="mongodb+srv://sreeraj234:Admin@cluster0.uoy2k.mongodb.net/todo?retryWrites=true&w=majority"
