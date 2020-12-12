@@ -42,12 +42,6 @@ router.get("/", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/", (req, res) => {
-  Todo.find()
-    .then((item) => res.json(item))
-    .catch((err) => console.log(err));
-});
-
 router.delete("/:id", (req, res) => {
   Todo.findById(req.params.id)
     .then((item) => item.remove().then(() => res.json({ success: true })))

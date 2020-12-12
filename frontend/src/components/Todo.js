@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import TodoItem from "./TodoItem";
+import "./Todo.css";
 
 export class Todo extends Component {
   constructor(props) {
@@ -38,33 +39,69 @@ export class Todo extends Component {
     });
   }
 
+  onDelete = (id) => {
+    axios
+      .delete("http://localhost:5000/todos/" + id)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.setState((prevState) => ({
+      todos: prevState.todos.filter((todo) => todo._id !== id),
+    }));
+  };
+
   onChangeTodoCompleted = (id, completed) => {
+    this.setState((prevState) => {
+      prevState.todos.map((todo) => {
+        if (todo._id === id) todo.completed = !todo.completed;
+        return todo;
+      });
+    });
     axios.post("http://localhost:5000/todos/update/" + id, {
       completed: !completed,
     });
-    this.setState((prevState) => {
-      prevState.todos.map((todo) => {
-        if (todo._id == id) todo.completed = !todo.completed;
-      });
-    });
+    window.location = "/";
   };
 
   render() {
     return (
       <div>
-        <input type="text" onChange={this.changeHandler} />
-        <button type="submit" onClick={this.clickHandler}>
-          add
-        </button>
+        <h1>TODO APP</h1>
+        <div class="add-items d-flex">
+          <input
+            class="form-control todo-list-input"
+            type="text"
+            onChange={this.changeHandler}
+          />
+          <button
+            class="add btn btn-primary font-weight-bold todo-list-add-btn"
+            type="submit"
+            onClick={this.clickHandler}
+          >
+            add
+          </button>
+        </div>
         <div>
-          <ul>
+          <ul class="list-group ">
             {this.state.todos.length > 0 ? (
               this.state.todos.map((todo) => (
-                <TodoItem
-                  key={todo._id}
-                  item={todo}
-                  onChangeTodoCompleted={this.onChangeTodoCompleted}
-                />
+                <li
+                  class={
+                    todo.completed === true
+                      ? "list-group-item list-group-item-danger"
+                      : "list-group-item list-group-item-success"
+                  }
+                >
+                  <TodoItem
+                    key={todo._id}
+                    item={todo}
+                    onChangeTodoCompleted={this.onChangeTodoCompleted}
+                    onDelete={this.onDelete}
+                  />
+                </li>
               ))
             ) : (
               <p>Enter A todo</p>
